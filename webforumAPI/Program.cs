@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using webforumAPI.JwtFeatures;
 using webforumAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +18,28 @@ builder.Services.AddDbContext<webForumDbContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("webForumDb"))
     );
 
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "https://localhost:7152",
+        ValidAudience = "https://localhost:7152",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+            .GetBytes("superSecretKey@345"))
+    };
+});
+
+builder.Services.AddScoped<JwtHandler>();
+
 //services cors
 builder.Services.AddCors();
 
@@ -26,9 +52,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseHttpsRedirection();
 
 app.MapControllers();
 

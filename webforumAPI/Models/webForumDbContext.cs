@@ -11,6 +11,12 @@ namespace webforumAPI.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseSerialColumns();
+
+            //modelBuilder.Entity<User>().HasKey(u => new
+            //{
+            //    u.id,
+            //    u.username,
+            //});
         }
 
         public DbSet<User> users { get; set; }

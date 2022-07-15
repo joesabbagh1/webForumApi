@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using webforumAPI.Models;
@@ -19,7 +20,7 @@ namespace webforumAPI.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<IEnumerable<Post>> Get()
         {
             return await _context.posts.ToListAsync();
