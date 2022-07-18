@@ -20,7 +20,7 @@ namespace webforumAPI.Controllers
             _context = context;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public async Task<IEnumerable<Post>> Get()
         {
             return await _context.posts.ToListAsync();
@@ -41,7 +41,7 @@ namespace webforumAPI.Controllers
             await _context.posts.AddAsync(new Post()
             {
                 id = Guid.NewGuid(),
-                user_id = post.user_id,
+                username = post.username,
                 title = post.title,
                 content = post.content,
                 date_created = DateTime.UtcNow,

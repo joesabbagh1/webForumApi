@@ -40,7 +40,7 @@ namespace webforumAPI.Controllers
             await _context.comments.AddAsync(new Comment()
             {
                 id = Guid.NewGuid(),
-                user_id = comment.user_id,
+                username = comment.username,
                 post_id = comment.post_id,
                 content = comment.content,
                 date_created = DateTime.UtcNow,

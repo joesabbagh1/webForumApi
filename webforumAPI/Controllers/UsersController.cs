@@ -21,6 +21,10 @@ namespace webforumAPI.Controllers
     {
         private readonly webForumDbContext _context;
 
+        public UsersController(webForumDbContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
         public async Task<IEnumerable<User>> Get()
