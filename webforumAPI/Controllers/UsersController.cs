@@ -50,15 +50,20 @@ namespace webforumAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(User user)
         {
-
-            await _context.users.AddAsync(new User()
+            var username = await _context.users.FindAsync(user.username);
+            if(username == null)
             {
-                //id = Guid.NewGuid(),
-                username = user.username,
-                password = user.password,
-                date_created = DateTime.UtcNow,
-            });
-
+                await _context.users.AddAsync(new User()
+                { 
+                    username = user.username,
+                    password = user.password,
+                    date_created = DateTime.UtcNow,
+                });
+            }
+            else
+            {
+                return BadRequest("username already taken");
+            }
             await _context.SaveChangesAsync();
 
             return Ok();

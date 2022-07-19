@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +23,7 @@
     <None Remove="JwtFeatures\" />
     <None Remove="Microsoft.Extensions.DependencyInjection" />
     <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />

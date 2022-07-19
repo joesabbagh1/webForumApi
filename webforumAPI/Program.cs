@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using webforumAPI.JwtFeatures;
@@ -17,6 +18,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<webForumDbContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("webForumDb"))
     );
+
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(opt =>
