@@ -29,8 +29,12 @@ namespace webforumAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var comment = await _context.posts.FindAsync(id);
-            return comment == null ? NotFound() : Ok(comment);
+            var comments = (
+                from comment in _context.comments
+                where comment.post_id == id
+                select comment
+                ).ToList();
+            return comments == null ? NotFound() : Ok(comments);
         }
 
         [HttpPost]
