@@ -52,7 +52,7 @@ namespace webforumAPI.Controllers
             return Ok();
         }
 
-        [HttpGet("/search")]
+        [HttpGet("search")]
         public async Task<IActionResult> Search([FromQuery] string request)
         {
             var posts = _context.posts.Where(post => post.title.Contains(request)).ToList();
